@@ -1,0 +1,16 @@
+(implemented)
+(W,A,S,D and Mouse) - Player and Camera Movement 
+(HOLD LeftShift) - Run
+(Spacebar) - Jump
+(E) - Pick-up / Interact
+(F) - Toggle Flashlight Active
+(HOLD F) - Toggle Flashlight Equipped
+(R) - Toggle Weapon Equipped
+(LMB) - Attack with Equipped Weapon
+(B) - Use Batteries
+
+(not implemented yet)
+(Q) - Open Player Inventory
+(L-CTRL) - Toggle Sneak Mode
+(LMB) [Within Inventory] - Equip Object
+(RMB) [Within Inventory] - Select 2 Objects to Combine 
