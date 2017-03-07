@@ -1,0 +1,39 @@
+====== The Assets Tree =====
+Assets
+	Custom
+		Materials
+		Models
+		Prefabs
+		Textures
+	Outside Assets
+		Materials
+		Models
+		Prefabs
+		Sprites
+		Textures
+		CatanaAndCrowbar
+		Metal textures pack
+		Monster3
+		SciFi HandLight Free
+		SciFi_Battery_Pack_free
+		SciFi_Door
+	Scenes
+	Scripts
+		Door
+		Enemy
+		Player
+	Standard Assets
+
+	
+=========================
+===== Description =====
+In the "Custom" folder, this is where we put only things that we created from scratch. These things such as models and prefabs can have textures/materials from "Outside Assets". That is okay.
+
+In the "Outside Assets" folder, this is where all the assets that we get from google, Unity Asset Store, etc.
+We can either leave it in their folder that Unity created when you import it from the store. For example, "Monster3". Otherwise we can put them in "Materials", "Models", "Prefabs", etc. "Prefabs" differ from the "Prefabs" folder in let's say "SciFi_Door" is that we changed something to it for our use.
+
+In the "Scenes" folder, this is all our scenes/levels. Test, prototypes, and official.
+
+In the "Scripts" folder, this is where ALL our scripts belong. All code that we coded.
+
+"Standard Assets" is a library we used. Also, found in "Player" folder. (a bug? lol)
