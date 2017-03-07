@@ -8,7 +8,7 @@ public class DoorController : MonoBehaviour
 
     private void Start()
     {
-
+		//Keep empty
     }
 
     private void OnTriggerEnter(Collider other)
