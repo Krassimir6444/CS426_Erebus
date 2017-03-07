@@ -1,0 +1,15 @@
+===== Lighting Effect =====
+
+Unity > Window > Lighting
+
+Set...
+	Environment Lighting
+		Skybox: None
+		Ambient Source: Color	
+		Ambient Color: Black
+	Fog
+		Fog Color: 3C3C3CFF
+		Fog Mode: Exponential Squared
+		Density: 0.1
+
+Disable Directional Light in Scene
