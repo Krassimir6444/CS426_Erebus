@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour {
         updateHealth();
 
         if (damaged) { damageImage.color = flashColor; }
-        else { damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); }
+        //else { damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); }
         damaged = false;
 
         //if (currentHealth == 100) healthSlider.gameObject.SetActive(false);

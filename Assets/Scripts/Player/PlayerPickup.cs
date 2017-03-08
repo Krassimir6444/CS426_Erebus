@@ -19,7 +19,7 @@ public class PlayerPickup : MonoBehaviour {
 
     void Update()
     {
-        if(objectInRange == true)
+        if(objectInRange == true && nearbyObject != null)
         {
             if (nearbyObject.gameObject.CompareTag("Equipment_Flashlight"))
             {
