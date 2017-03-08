@@ -1,0 +1,3 @@
+Debug EnemyAI script to ensure the monster is moving toward player -- Wed 3pm (Estimate 1 hour)
+
+Fix the monster prefab to make sure it is compatible to script above -- Wed 4pm (Estimate 2 hours)  
