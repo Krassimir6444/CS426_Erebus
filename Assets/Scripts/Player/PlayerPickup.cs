@@ -61,6 +61,29 @@ public class PlayerPickup : MonoBehaviour {
                 }
             }
 
+            if (nearbyObject.gameObject.CompareTag("Consumable_Keycard"))
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //audio clip
+                    playerInventory.hasKeycard = true;
+                    Destroy(nearbyObject.gameObject);
+                    pickupPrompt.gameObject.SetActive(false);
+                }
+            }
+
+            if (nearbyObject.gameObject.CompareTag("Consumable_Medkit"))
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //audio clip
+                    playerInventory.numMedkits++;
+                    Destroy(nearbyObject.gameObject);
+                    pickupPrompt.gameObject.SetActive(false);
+                }
+            }
+
+
             /*
             if (nearbyObject.gameObject.CompareTag("Equipment_LaserPistol")) 
             {
@@ -68,17 +91,6 @@ public class PlayerPickup : MonoBehaviour {
                 {
                     //audio clip
                     playerInventory.hasLaserPistol = true;
-                    Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
-                }
-            }
-
-            if (nearbyObject.gameObject.CompareTag("Consumable_Bandage"))
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    //audio clip
-                    playerInventory.numBandages++;
                     Destroy(nearbyObject.gameObject);
                     pickupPrompt.gameObject.SetActive(false);
                 }

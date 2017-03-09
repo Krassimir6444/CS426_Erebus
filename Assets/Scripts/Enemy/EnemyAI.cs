@@ -26,10 +26,12 @@ public class EnemyAI : MonoBehaviour {
 	{
 		targetDistance = Vector3.Distance (player.position, transform.position);
 		if(targetDistance < enemyLookDistance){
+			myRender.material.color = Color.green;//debug
 			lookAtPlayer ();
 			print (" I saw you!");//for debug
 		}
 		if (targetDistance < attackDistance) {
+			myRender.material.color = Color.red;//debug
 			attack ();
 			print ("Attack");//debug
 		} else {
@@ -38,8 +40,9 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void lookAtPlayer(){
+		Quaternion rotation = Quaternion.LookRotation (player.position - transform.position);
 		transform.rotation = Quaternion.Slerp(transform.rotation, 
-			Quaternion.LookRotation(player.position - transform.position),
+			rotation,
 			rotationSpeed * Time.deltaTime);
 	}
 

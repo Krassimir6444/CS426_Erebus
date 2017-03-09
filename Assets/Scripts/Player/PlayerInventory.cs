@@ -32,13 +32,19 @@ public class PlayerInventory : MonoBehaviour {
     public bool equippedLaserPistol = false;
 
     //consumables
-    public int numBandages = 0;
+    public int numMedkits = 0;
     public int numBatteries = 0;
     
     //objects
     public bool hasKeycard = false;
 
     float startTime = 0;
+
+
+    void Awake ()
+    {
+        playerHealth = GetComponent<PlayerHealth>();
+    }
 
 	void Start ()
     {
@@ -120,13 +126,18 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
 
-        /*
-        if (Input.GetKeyDown(KeyCode.Q) && (numBandages > 0))
+        if (Input.GetKeyDown(KeyCode.Q) && (numMedkits > 0))
         {
             playerHealth.restoreHealth(33);
-            numBandages--;
+            numMedkits--;
         }
-        */
+
+        // FOR TESTING
+        if (Input.GetKeyDown(KeyCode.Minus) && (numMedkits > 0))
+        {
+            playerHealth.damageHealth(50);
+        }
+
     }
 
     public void unequipPreviousWeapon()
