@@ -3,12 +3,10 @@ Assets
 	Custom
 		Materials
 		Models
-		Prefabs
 		Textures
 	Outside Assets
 		Materials
 		Models
-		Prefabs
 		Sprites
 		Textures
 		CatanaAndCrowbar
@@ -17,6 +15,7 @@ Assets
 		SciFi HandLight Free
 		SciFi_Battery_Pack_free
 		SciFi_Door
+	Prefabs
 	Scenes
 	Scripts
 		Door
