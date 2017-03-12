@@ -9,7 +9,9 @@ public class PlayerInventory : MonoBehaviour {
     public UnityEngine.UI.Text batteryCount;
     public UnityEngine.UI.Slider flashlightCharge;
     public UnityEngine.UI.Image equipedWeapon;
+    //public UnityEngine.GameObject exitDoor;
     PlayerHealth playerHealth;
+    PlayerPickup playerPickup;
 
     //equipment
     public Sprite fistSprite;
@@ -44,6 +46,7 @@ public class PlayerInventory : MonoBehaviour {
     void Awake ()
     {
         playerHealth = GetComponent<PlayerHealth>();
+        playerPickup = GetComponent<PlayerPickup>();
     }
 
 	void Start ()
@@ -137,6 +140,13 @@ public class PlayerInventory : MonoBehaviour {
         {
             playerHealth.damageHealth(50);
         }
+
+        /*
+        if (Input.GetKeyDown(KeyCode.E) && hasKeycard && playerPickup.objectInRange)
+        {
+            // enable exit door
+        }
+        */
 
     }
 

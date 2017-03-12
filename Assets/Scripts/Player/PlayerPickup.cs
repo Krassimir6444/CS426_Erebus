@@ -8,7 +8,7 @@ public class PlayerPickup : MonoBehaviour {
     public UnityEngine.UI.Text pickupPrompt;
     PlayerInventory playerInventory;
 
-    bool objectInRange = false;
+    public bool objectInRange = false;
     Collider nearbyObject;
 
 

@@ -1,0 +1,9 @@
+3) A list detailing the following level components (short and sweet):
+- list of Level Geometry, (try to optimize for real time rendering & shading)
+- list of Textures necessary
+- list of Characters and Topology for animation (what paths they will follow)
+- list of Character Animations necessary (e.g, idle, walk, run, pull-lever and death.)
+- list of Animations necessary for Door, Puzzle & Artifact.
+- list of Lightmapping, and Dynamic lights.
+- list of Particles necessary (if any; Dust, Fire etc)
+- list of at least 2 (or 3) AI constructs to be used in the level
