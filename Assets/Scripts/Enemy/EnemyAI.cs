@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +12,9 @@ public class EnemyAI : MonoBehaviour {
 	public float moveSpeed;
 	Rigidbody rb;
 	Renderer myRender;
+	PlayerHealth ph;
+	public int damagePlayerHealth;
+	public GameObject playerModel;
 
 	// Use this for initialization
 	void Start ()
@@ -19,6 +22,8 @@ public class EnemyAI : MonoBehaviour {
 		myRender = GetComponent<Renderer> ();
 		rb = GetComponent<Rigidbody> ();
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
+		playerModel = GameObject.FindGameObjectWithTag ("Player");
+		ph = playerModel.GetComponent<PlayerHealth> ();
 	}
 
 	// Update is called once per frame
@@ -50,6 +55,7 @@ public class EnemyAI : MonoBehaviour {
 		/* Move to player*/
 		//transform.position += transform.forward * moveSpeed * Time.deltaTime;
 		rb.AddForce (transform.forward * moveSpeed);
+		ph.damageHealth (damagePlayerHealth);
 	}
 	void rest(){
 		// Do nothing
