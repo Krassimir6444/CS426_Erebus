@@ -24,3 +24,5 @@ https://www.assetstore.unity3d.com/en/#!/content/19738
 Crowbar - Catana and Crowbar Pack - Tibor Szijjarto
 https://www.assetstore.unity3d.com/en/#!/content/8893
 
+Explosion System - Vadim Gerc
+https://www.assetstore.unity3d.com/en/#!/content/76511
