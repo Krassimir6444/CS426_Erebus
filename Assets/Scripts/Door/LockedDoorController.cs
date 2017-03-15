@@ -6,6 +6,7 @@ public class LockedDoorController : MonoBehaviour {
 
     public GameObject Player;
     public GameObject Door;
+    public UnityEngine.UI.Text KeyCardRequired;
 
     private PlayerInventory playerInventory;
 
@@ -23,7 +24,10 @@ public class LockedDoorController : MonoBehaviour {
         {
             Door.GetComponent<Animation>().Play("open");
         }
-        //else do nothing
+        else
+        {
+            KeyCardRequired.gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -32,6 +36,9 @@ public class LockedDoorController : MonoBehaviour {
         {
             Door.GetComponent<Animation>().Play("close");
         }
-        //else do nothing
+        else
+        {
+            KeyCardRequired.gameObject.SetActive(false);
+        }
     }
 }
