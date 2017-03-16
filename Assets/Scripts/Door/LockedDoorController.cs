@@ -6,7 +6,7 @@ public class LockedDoorController : MonoBehaviour {
 
     public GameObject Player;
     public GameObject Door;
-    public UnityEngine.UI.Text KeyCardRequired;
+    public UnityEngine.UI.Text KeycardPrompt;
 
     private PlayerInventory playerInventory;
 
@@ -26,7 +26,7 @@ public class LockedDoorController : MonoBehaviour {
         }
         else
         {
-            KeyCardRequired.gameObject.SetActive(true);
+            KeycardPrompt.gameObject.SetActive(true);
         }
     }
 
@@ -38,7 +38,7 @@ public class LockedDoorController : MonoBehaviour {
         }
         else
         {
-            KeyCardRequired.gameObject.SetActive(false);
+            KeycardPrompt.gameObject.SetActive(false);
         }
     }
 }
