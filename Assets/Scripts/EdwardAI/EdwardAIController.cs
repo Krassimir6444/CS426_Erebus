@@ -9,16 +9,17 @@ public class EdwardAIController : MonoBehaviour {
     public GameObject Creature;
     public List<GameObject> PatrolNodes;
 
-    public float speed = 1.7f;
+    public float StepSpeed = 1.7f;
+    public float TurnSpeed = 15f;
 
     private Transform CreatureTransform;
     private Animation CreatureAnimation;
     private EnemyStates EnemyState;
 
     private GameObject StartNode;
-    private int patrolNodeCounter;
-    private int patrolNodeDirection;
     private Vector3 NextPatrolNodePosition;
+    private int patrolNodeCounter = 0;
+    private int patrolNodeDirection = 1;
 
 
 
@@ -32,8 +33,6 @@ public class EdwardAIController : MonoBehaviour {
         PatrolNodes.Insert(0, StartNode);
 
         NextPatrolNodePosition = StartNode.GetComponent<Transform>().position;
-        patrolNodeCounter = 0;
-        patrolNodeDirection = 1;
     }
 	
 	void Update () {
@@ -48,27 +47,38 @@ public class EdwardAIController : MonoBehaviour {
 
 
 
+        //Idle
         if(EnemyState == EnemyStates.Idle)
         {
             CreatureAnimation.Play("creature1Idle");
         }
+        //Patrol
         else if (EnemyState == EnemyStates.Patrol)
         {
+            CreatureAnimation.Play("creature1walkforward");
+
+            //Get next patrol node if arrived at current targeted patrol node
             if (Vector3.Distance(CreatureTransform.position, NextPatrolNodePosition) < 0.5f)
             {
                 NextPatrolNodePosition = GetNextPatrolNodePosition();
             }
-            
-            Creature.GetComponent<Animation>().Play("creature1walkforward");
-            //Creature.GetComponentInParent<Transform>().position =
-            float step = speed * Time.deltaTime;
-            Creature.GetComponentInParent<Transform>().position = Vector3.MoveTowards(Creature.GetComponentInParent<Transform>().position, NextPatrolNodePosition, step);
+
+            //Turn monster towards next patrol node
+            Vector3 targetDir = NextPatrolNodePosition - CreatureTransform.position;
+            float turnStep = TurnSpeed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(CreatureTransform.forward, targetDir, turnStep, 0.0f);
+            CreatureTransform.rotation = Quaternion.LookRotation(newDir);
+
+            //Move towards next patrol node
+            float step = StepSpeed * Time.deltaTime;
+            CreatureTransform.position = Vector3.MoveTowards(CreatureTransform.position, NextPatrolNodePosition, step);
             
         }
     }
 
     private Vector3 GetNextPatrolNodePosition()
     {
+        //Allows GetNextPatrolNodePosition to go through the array of Patrol Nodes from 0 -> lastnode -> 0 and repeat
         if(patrolNodeCounter == PatrolNodes.Count)
         {
             patrolNodeDirection = -1;
