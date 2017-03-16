@@ -15,6 +15,8 @@ public class EnemyAI : MonoBehaviour {
 	PlayerHealth ph;
 	public int damagePlayerHealth;
 	public GameObject playerModel;
+	private Steering steeringBasics;
+	private Wander2 wander;
 
 	// Use this for initialization
 	void Start ()
@@ -24,6 +26,8 @@ public class EnemyAI : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		playerModel = GameObject.FindGameObjectWithTag ("Player");
 		ph = playerModel.GetComponent<PlayerHealth> ();
+		steeringBasics = GetComponent<Steering>();
+		wander = GetComponent<Wander2>();
 	}
 
 	// Update is called once per frame
@@ -58,7 +62,11 @@ public class EnemyAI : MonoBehaviour {
 		ph.damageHealth (damagePlayerHealth);
 	}
 	void rest(){
-		// Do nothing
+		// Wandering
+		Vector3 accel = wander.getSteering();
+
+		steeringBasics.steer(accel);
+		steeringBasics.lookWhereYoureGoing();
 	}
 }
 
