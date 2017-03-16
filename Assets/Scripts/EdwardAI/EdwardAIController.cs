@@ -8,6 +8,7 @@ public class EdwardAIController : MonoBehaviour {
 
     public EdwardAIController Script;
     public GameObject CreatureParentObject;
+    public GameObject AIViewRange;
     public List<GameObject> PatrolNodes;
 
     public float StepSpeed = 1.7f;
@@ -68,15 +69,28 @@ public class EdwardAIController : MonoBehaviour {
                 NextPatrolNodePosition = GetNextPatrolNodePosition();
             }
 
+
             //Turn monster towards next patrol node
             Vector3 targetDir = NextPatrolNodePosition - CreatureTransform.position;
             float turnStep = TurnSpeed * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(CreatureTransform.forward, targetDir, turnStep, 0.0f);
             CreatureTransform.rotation = Quaternion.LookRotation(newDir);
 
+            //turn view range along with AI
+            /*
+            Vector3 newDir2 = Vector3.RotateTowards(AIViewRange.GetComponent<Transform>().forward, targetDir, turnStep, 0.0f);
+            Quaternion tq = Quaternion.Euler(CreatureTransform.rotation.x, CreatureTransform.rotation.y, CreatureTransform.rotation.z) * Quaternion.Euler(0, 135, 0);
+            AIViewRange.GetComponent<Transform>().rotation = tq;*/
+
+
             //Move towards next patrol node
             float step = StepSpeed * Time.deltaTime;
             CreatureTransform.position = Vector3.MoveTowards(CreatureTransform.position, NextPatrolNodePosition, step);
+
+            //move view range along with AI
+            Vector3 offset = new Vector3(0f, 1f, 0.25f);
+            Vector3 creaturePosition = CreatureTransform.position;
+            AIViewRange.GetComponent<Transform>().position = creaturePosition + offset;
         }
         //Attack
         else if(EnemyState == EnemyStates.Attack)
@@ -88,6 +102,8 @@ public class EdwardAIController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("other " + other);
+        Debug.Log("this " + this);
         if (other.tag == "Player")
         {
             Script.EnemyState = EnemyStates.Attack;
