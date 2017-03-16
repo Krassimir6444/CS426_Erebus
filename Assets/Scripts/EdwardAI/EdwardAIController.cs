@@ -6,7 +6,8 @@ enum EnemyStates { Idle, Patrol, Attack };
 
 public class EdwardAIController : MonoBehaviour {
 
-    public GameObject Creature;
+    public EdwardAIController Script;
+    public GameObject CreatureParentObject;
     public List<GameObject> PatrolNodes;
 
     public float StepSpeed = 1.7f;
@@ -14,7 +15,7 @@ public class EdwardAIController : MonoBehaviour {
 
     private Transform CreatureTransform;
     private Animation CreatureAnimation;
-    private EnemyStates EnemyState;
+    private EnemyStates EnemyState = EnemyStates.Patrol;
 
     private GameObject StartNode;
     private Vector3 NextPatrolNodePosition;
@@ -24,31 +25,35 @@ public class EdwardAIController : MonoBehaviour {
 
 
     void Start () {
-        CreatureTransform = Creature.GetComponentInParent<Transform>();
-        CreatureAnimation = Creature.GetComponent<Animation>();
-        EnemyState = EnemyStates.Idle;
+        CreatureTransform = CreatureParentObject.GetComponent<Transform>();
+        CreatureAnimation = CreatureParentObject.GetComponentInChildren<Animation>();
 
         StartNode = new GameObject("Patrol Start Location");
-        StartNode.GetComponent<Transform>().position = new Vector3(Creature.transform.position.x, Creature.transform.position.y, Creature.transform.position.z);
+        StartNode.GetComponent<Transform>().position = new Vector3(CreatureTransform.position.x, CreatureTransform.position.y, CreatureTransform.position.z);
         PatrolNodes.Insert(0, StartNode);
 
         NextPatrolNodePosition = StartNode.GetComponent<Transform>().position;
     }
-	
-	void Update () {
-        if(Input.GetKey(KeyCode.K))//use for testing
+
+    void Update () {
+        //Used for testing
+        if ( Input.GetKey(KeyCode.K) )
         {
             EnemyState = EnemyStates.Patrol;
         }
+        else if ( Input.GetKey(KeyCode.L) )
+        {
+            EnemyState = EnemyStates.Attack;
+        }
         else
         {
-            EnemyState = EnemyStates.Idle;
+            //EnemyState = EnemyStates.Idle;
         }
 
 
 
         //Idle
-        if(EnemyState == EnemyStates.Idle)
+        if (EnemyState == EnemyStates.Idle)
         {
             CreatureAnimation.Play("creature1Idle");
         }
@@ -72,18 +77,39 @@ public class EdwardAIController : MonoBehaviour {
             //Move towards next patrol node
             float step = StepSpeed * Time.deltaTime;
             CreatureTransform.position = Vector3.MoveTowards(CreatureTransform.position, NextPatrolNodePosition, step);
-            
+        }
+        //Attack
+        else if(EnemyState == EnemyStates.Attack)
+        {
+            CreatureAnimation.Play("creature1Attack2");
+            //damage player
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Script.EnemyState = EnemyStates.Attack;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Script.EnemyState = EnemyStates.Patrol;
         }
     }
 
     private Vector3 GetNextPatrolNodePosition()
     {
         //Allows GetNextPatrolNodePosition to go through the array of Patrol Nodes from 0 -> lastnode -> 0 and repeat
-        if(patrolNodeCounter == PatrolNodes.Count)
+        if(patrolNodeCounter == PatrolNodes.Count-1)
         {
             patrolNodeDirection = -1;
         }
-        if(patrolNodeCounter == -1)
+        if(patrolNodeCounter == 0)
         {
             patrolNodeDirection = 1;
         }
