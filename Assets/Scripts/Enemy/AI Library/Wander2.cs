@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//https://www.reddit.com/r/gamedev/comments/3q0yn8/here_is_some_free_unity_movement_ai_ive_made/
 public class Wander2 : MonoBehaviour {
 
 	public float wanderRadius = 1.2f;

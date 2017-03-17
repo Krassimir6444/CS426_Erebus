@@ -1,25 +1,30 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerPickup : MonoBehaviour {
+public class PlayerInteract : MonoBehaviour {
 
-    public UnityEngine.UI.Text pickupPrompt;
+    public UnityEngine.UI.Text interactPrompt;
+    public UnityEngine.UI.Text keycardPrompt;
+    public UnityEngine.UI.Text crowbarPrompt;
     PlayerInventory playerInventory;
+    //DoorController doorController;
 
     public bool objectInRange = false;
-    Collider nearbyObject;
+    public Collider nearbyObject;
 
 
     void Start()
     {
         playerInventory = GetComponent<PlayerInventory>();
+        //doorController = GetComponent<DoorController>();
     }
 
     void Update()
     {
-        if(objectInRange == true && nearbyObject != null)
+        if (objectInRange == true && nearbyObject != null)
         {
             if (nearbyObject.gameObject.CompareTag("Equipment_Flashlight"))
             {
@@ -30,7 +35,7 @@ public class PlayerPickup : MonoBehaviour {
                     playerInventory.equippedFlashlight = true;
                     playerInventory.flashlight.SetActive(true);
                     Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
+                    interactPrompt.gameObject.SetActive(false);
                 }
             }
 
@@ -42,12 +47,12 @@ public class PlayerPickup : MonoBehaviour {
                     playerInventory.numBatteries++;
                     playerInventory.batteryCount.text = playerInventory.numBatteries + "";
                     Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
+                    interactPrompt.gameObject.SetActive(false);
                 }
             }
-           
+
             if (nearbyObject.gameObject.CompareTag("Equipment_Crowbar"))
-            { 
+            {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     //audio clip
@@ -57,7 +62,7 @@ public class PlayerPickup : MonoBehaviour {
                     playerInventory.crowbar.SetActive(true);
                     playerInventory.equipedWeapon.sprite = playerInventory.crowbarSprite;
                     Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
+                    interactPrompt.gameObject.SetActive(false);
                 }
             }
 
@@ -68,7 +73,7 @@ public class PlayerPickup : MonoBehaviour {
                     //audio clip
                     playerInventory.hasKeycard = true;
                     Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
+                    interactPrompt.gameObject.SetActive(false);
                 }
             }
 
@@ -79,10 +84,24 @@ public class PlayerPickup : MonoBehaviour {
                     //audio clip
                     playerInventory.numMedkits++;
                     Destroy(nearbyObject.gameObject);
-                    pickupPrompt.gameObject.SetActive(false);
+                    interactPrompt.gameObject.SetActive(false);
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.E) && playerInventory.hasKeycard &&
+                nearbyObject.gameObject.CompareTag("Door_Locked"))
+            {
+                nearbyObject.gameObject.transform.position += Vector3.up * 5.0F;
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && playerInventory.hasCrowbar &&
+                nearbyObject.gameObject.CompareTag("Door_Jammed"))
+            {
+                playerInventory.unequipPreviousWeapon();
+                playerInventory.hasCrowbar = false;
+                nearbyObject.gameObject.transform.position += Vector3.up * 5.0F;
+            }
 
             /*
             if (nearbyObject.gameObject.CompareTag("Equipment_LaserPistol")) 
@@ -101,15 +120,29 @@ public class PlayerPickup : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        pickupPrompt.gameObject.SetActive(true);
+        if (other.gameObject.CompareTag("Door_Locked"))
+        {
+            keycardPrompt.gameObject.SetActive(true);
+        }
+        else if (other.gameObject.CompareTag("Door_Jammed"))
+        {
+            crowbarPrompt.gameObject.SetActive(true);
+        }
+        else if (!(other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("SF_Door")))
+        {
+            interactPrompt.gameObject.SetActive(true);
+        }
+        
         objectInRange = true;
         nearbyObject = other;
     }
     void OnTriggerExit(Collider other)
     {
-        pickupPrompt.gameObject.SetActive(false);
+        interactPrompt.gameObject.SetActive(false);
+        keycardPrompt.gameObject.SetActive(false);
+        crowbarPrompt.gameObject.SetActive(false);
         objectInRange = false;
-        nearbyObject = null;
+        nearbyObject = null;     
     }
 
 }

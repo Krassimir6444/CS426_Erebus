@@ -1,3 +1,0 @@
-Finish making the rest of the level. -- Wed 7pm (Est. 1h)
-
-Script for a locked door. only opens if player has keycard -- wed 8pm (Est. 1h)

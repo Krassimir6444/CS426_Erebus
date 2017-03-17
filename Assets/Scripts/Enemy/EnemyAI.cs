@@ -68,5 +68,5 @@ public class EnemyAI : MonoBehaviour {
 		steeringBasics.steer(accel);
 		steeringBasics.lookWhereYoureGoing();
 	}
+		
 }
-

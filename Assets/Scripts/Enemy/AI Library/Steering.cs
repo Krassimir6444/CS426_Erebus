@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+//https://www.reddit.com/r/gamedev/comments/3q0yn8/here_is_some_free_unity_movement_ai_ive_made/
 
 [RequireComponent (typeof (Rigidbody))]
 public class Steering : MonoBehaviour {

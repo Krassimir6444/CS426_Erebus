@@ -11,7 +11,7 @@ public class PlayerInventory : MonoBehaviour {
     public UnityEngine.UI.Image equipedWeapon;
     //public UnityEngine.GameObject exitDoor;
     PlayerHealth playerHealth;
-    PlayerPickup playerPickup;
+    PlayerInteract playerInteract;
 
     //equipment
     public Sprite fistSprite;
@@ -46,7 +46,7 @@ public class PlayerInventory : MonoBehaviour {
     void Awake ()
     {
         playerHealth = GetComponent<PlayerHealth>();
-        playerPickup = GetComponent<PlayerPickup>();
+        playerInteract = GetComponent<PlayerInteract>();
     }
 
 	void Start ()
@@ -135,6 +135,7 @@ public class PlayerInventory : MonoBehaviour {
             numMedkits--;
         }
 
+
         // FOR TESTING
         if (Input.GetKeyDown(KeyCode.Minus) && (numMedkits > 0))
         {
@@ -147,7 +148,6 @@ public class PlayerInventory : MonoBehaviour {
             // enable exit door
         }
         */
-
     }
 
     public void unequipPreviousWeapon()
@@ -159,5 +159,8 @@ public class PlayerInventory : MonoBehaviour {
 
         equippedLaserPistol = false;
         // add .SetActive(false) for future laserPistol fbx
+
+        equipedWeapon.sprite = fistSprite;
     }
 }
+
