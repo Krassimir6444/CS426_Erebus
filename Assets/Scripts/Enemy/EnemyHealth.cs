@@ -27,13 +27,13 @@ public class EnemyHealth : MonoBehaviour
 	}
 
 
-	public void ReceiveDamage ()
+	public void ReceiveDamage (int value)
 	{
 		// Set the damaged flag so the screen will flash.
 		damaged = true;
 
 		// Reduce the current health by the damage amount.
-		currentHealth -= 20;
+		currentHealth -= value;
 
 		// If the player has lost all it's health and the death flag hasn't been set yet...
 		if(currentHealth <= 0 && !isDead)

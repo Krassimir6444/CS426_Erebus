@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour {
 
     PlayerInventory playerInventory;
-    public UnityEngine.GameObject crowbar;
+    EnemyHealth enemyHealth;
+    public GameObject player;
+    public GameObject crowbar;
 
     public bool enemyInRange = false;
-    Collider nearbyEnemy;
+    public GameObject nearbyEnemy;
 
     void Start () {
         playerInventory = GetComponent<PlayerInventory>();
@@ -21,21 +23,24 @@ public class PlayerAttack : MonoBehaviour {
         {
             crowbar.transform.position += Vector3.up * 0.1F;
             crowbar.transform.Rotate(new Vector3(0,0,40));
+
+            if (enemyInRange == true)
+            {
+                enemyHealth = nearbyEnemy.GetComponent<EnemyHealth>();
+                enemyHealth.ReceiveDamage(20);
+
+                var force = transform.position - nearbyEnemy.transform.position;
+                force.Normalize();
+                nearbyEnemy.GetComponent<Rigidbody>().AddForce(force * 5000);
+            }
+            
         }
         if (Input.GetKeyUp(KeyCode.Mouse0) && (playerInventory.equippedCrowbar == true))
         {
             crowbar.transform.Rotate(new Vector3(0,0,-40));
             crowbar.transform.position -= Vector3.up * 0.1F;
-            //audio clip
 
-            // kinda poor way to do this, change if alternative found
-            if (enemyInRange == true)
-            {
-                if (nearbyEnemy.gameObject.CompareTag("Enemy_Bune"))
-                {
-                    //damage enemy 
-                }
-            }
+            enemyHealth = null;
         }
 
     }
@@ -43,12 +48,19 @@ public class PlayerAttack : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        enemyInRange = true;
-        nearbyEnemy = other;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            enemyInRange = true;
+            nearbyEnemy = other.gameObject;
+        }
     }
+
     void OnTriggerExit(Collider other)
     {
-        enemyInRange = false;
-        nearbyEnemy = null;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            enemyInRange = false;
+            nearbyEnemy = null;
+        }
     }
 }
