@@ -138,8 +138,10 @@ public class PlayerInteract : MonoBehaviour {
         }
         else if (!(other.gameObject.CompareTag("Door") || 
                    other.gameObject.CompareTag("SF_Door") ||
-                   other.gameObject.CompareTag("Player") ||
                    other.gameObject.CompareTag("Enemy") ||
+                   other.gameObject.CompareTag("Enemy_AttackRange") ||
+                   other.gameObject.CompareTag("Enemy_Hitbox") ||
+                   other.gameObject.CompareTag("Player") ||
                    other.gameObject.CompareTag("Player_Node") ) )
         {
             interactPrompt.gameObject.SetActive(true);

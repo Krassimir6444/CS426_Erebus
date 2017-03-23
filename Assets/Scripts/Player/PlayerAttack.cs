@@ -23,32 +23,28 @@ public class PlayerAttack : MonoBehaviour {
         {
             crowbar.transform.position += Vector3.up * 0.1F;
             crowbar.transform.Rotate(new Vector3(0,0,40));
-
-            if (enemyInRange == true)
-            {
-                enemyHealth = nearbyEnemy.GetComponent<EnemyHealth>();
-                enemyHealth.ReceiveDamage(20);
-
-                var force = transform.position - nearbyEnemy.transform.position;
-                force.Normalize();
-                nearbyEnemy.GetComponent<Rigidbody>().AddForce(force * 5000);
-            }
-            
         }
         if (Input.GetKeyUp(KeyCode.Mouse0) && (playerInventory.equippedCrowbar == true))
         {
-            crowbar.transform.Rotate(new Vector3(0,0,-40));
+            crowbar.transform.Rotate(new Vector3(0, 0, -40));
             crowbar.transform.position -= Vector3.up * 0.1F;
 
-            enemyHealth = null;
+            if (enemyInRange == true)
+            {
+                enemyHealth = nearbyEnemy.GetComponentInParent<EnemyHealth>();
+                enemyHealth.ReceiveDamage(20);
+                enemyHealth = null;
+
+                var force = transform.position - nearbyEnemy.transform.position;
+                force.Normalize();
+                nearbyEnemy.GetComponentInParent<Rigidbody>().AddForce(force * 5000);
+            }  
         }
-
     }
-
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy_Hitbox"))
         {
             enemyInRange = true;
             nearbyEnemy = other.gameObject;
@@ -57,7 +53,7 @@ public class PlayerAttack : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy_Hitbox"))
         {
             enemyInRange = false;
             nearbyEnemy = null;

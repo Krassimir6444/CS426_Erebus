@@ -6,7 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
 	public GameObject Enemy;
 	private int startingHealth = 100;                            // The amount of health the player starts the game with.
-	private int currentHealth;                                   // The current health the player has.
+	public int currentHealth;                                   // The current health the player has.
 
 	bool isDead;                                                // Whether the player is dead.
 	bool damaged;                                               // True when the player gets damaged.
