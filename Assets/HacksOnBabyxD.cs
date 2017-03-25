@@ -67,13 +67,34 @@ public class HacksOnBabyxD : MonoBehaviour
 
     void Start()
     {
-        
-
-}
+        defaultValues = new PlayerValues();
+        SaveDefaultValues(defaultValues);
+    }
 
     void Update()
     {
 
     }
 
+    private void SaveDefaultValues(PlayerValues pv)
+    {
+        pv.forwardSpeed = RbFPCScript.movementSettings.ForwardSpeed;
+        pv.backwardSpeed = RbFPCScript.movementSettings.BackwardSpeed;
+        pv.strafeSpeed = RbFPCScript.movementSettings.StrafeSpeed;
+        pv.runMultiplier = RbFPCScript.movementSettings.RunMultiplier;
+        pv.currentHealth = HealthScript.currentHealth;
+        pv.currentStamina = StaminaScript.currentStamina;
+        pv.hasFist = InventoryScript.hasFist;
+        pv.hasFlashlight = InventoryScript.hasFlashlight;
+        pv.hasCrowbar = InventoryScript.hasCrowbar;
+        pv.hasLaserPistol = InventoryScript.hasLaserPistol;
+        pv.hasKeycard = InventoryScript.hasKeycard;
+        pv.equippedFist = InventoryScript.equippedFist;
+        pv.equippedFlashlight = InventoryScript.equippedFlashlight;
+        pv.equippedCrowbar = InventoryScript.equippedCrowbar;
+        pv.equippedLaserPistol = InventoryScript.equippedLaserPistol;
+        pv.numMedkits = InventoryScript.numMedkits;
+        pv.numBatteries = InventoryScript.numBatteries;
+        //add default values for showing flashlight and crowbar models
+    }
 }
