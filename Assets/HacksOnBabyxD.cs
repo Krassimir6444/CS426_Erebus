@@ -11,23 +11,16 @@
 /* Note to Self:
  *     RigidbodyFirstPersonController:
  *         ForwardSpeed, BackwardSpeed, StrafeSpeed
- *         Run Multiplier
+ *         RunMultiplier
  *     PlayerHealth:
  *         CurrentHealth
  *     PlayerStamina:
  *         CurrentStamina
  *     PlayerInventory:
  *         Has
- *             Fist
- *             Flashlight
- *             Crowbar
- *             LaserPistol
- *             Keycard
+ *             Fist, Flashlight, Crowbar, LaserPistol, Keycard
  *         Equipped
- *             Fist
- *             Flashlight
- *             Crowbar
- *             LaserPistol
+ *             Fist, Flashlight, Crowbar, LaserPistol
  *          NumMedkits
  *          NumBatteries
  *      Under PlayerPrefab:
@@ -40,11 +33,11 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
+[Serializable]
 public class HacksOnBabyxD : MonoBehaviour
 {
     public class PlayerValues
     {
-        [NonSerialized]
         public float forwardSpeed, backwardSpeed, strafeSpeed;
         public float runMultiplier;
 
@@ -56,18 +49,19 @@ public class HacksOnBabyxD : MonoBehaviour
         public bool equippedFist, equippedFlashlight, equippedCrowbar, equippedLaserPistol;
         public int numMedkits, numBatteries;
 
-        public bool showHandLightModel, showCrowbarModel;
+        //public bool showHandLightModel, showCrowbarModel;
     }
 
-    RigidbodyFirstPersonController RbFPCScript;
-    PlayerHealth HealthScript;
-    PlayerStamina StaminaScript;
-    PlayerInventory InventoryScript;
+    //↓↓↓ Warning about UnityStandardAssets is because there are 2 "Standard Assets" folder. Fix that and this will be fixed
+    public RigidbodyFirstPersonController RbFPCScript;
+    public PlayerHealth HealthScript;
+    public PlayerStamina StaminaScript;
+    public PlayerInventory InventoryScript;
 
-    GameObject HandLightModel, CrowbarModel;
+    //public GameObject HandLightModel, CrowbarModel;
 
-    PlayerValues defaultValues = new PlayerValues();
-    PlayerValues customValues = new PlayerValues();
+    private PlayerValues defaultValues = new PlayerValues();
+    private PlayerValues customValues = new PlayerValues();
 
     private Rect HacksOnRect = new Rect(50, 50, (Screen.width - 100), (Screen.height - 100));
     private bool ShowHacksDialog = false;
@@ -82,13 +76,12 @@ public class HacksOnBabyxD : MonoBehaviour
     {
         if (ShowHacksDialog)
         {
-            HacksOnRect = GUILayout.Window(0, HacksOnRect, HacksOnContent, "Hacks On Baby");
+            HacksOnRect = GUILayout.Window(0, HacksOnRect, HacksOnContent, "Hacks On Baby - You Noob.");
         }
     }
 
     void HacksOnContent(int WindowID)
     {
-        GUILayout.Label("Hacks On Baby - You Noob.");
         GUILayout.Label("Todo");
     }
 
@@ -127,4 +120,6 @@ public class HacksOnBabyxD : MonoBehaviour
     }
 
     //function: revert values back to default values
+
+    //function: change values according to modified values (customValues)
 }
