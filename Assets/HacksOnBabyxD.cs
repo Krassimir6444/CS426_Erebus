@@ -1,5 +1,8 @@
 ﻿/* === Hacks On Baby xD ===
  * Used during demo only.
+ * 
+ * Right Ctrl + H to show the hacks menu.
+ * 
  * Allow us to change player settings so we can speed through the level as 
  * well as give/get resources without actually going to specific locations 
  * where the resources reside in the map.
@@ -31,7 +34,7 @@
  *          Player->PlayerView->Equipment:
  *              HandLight
  *              Crowbar
- *          HUD (low priority)
+ *          HUD (medium priority, show/display models if equipped/not equipped)
  * */
 using System;
 using UnityEngine;
@@ -55,7 +58,7 @@ public class HacksOnBabyxD : MonoBehaviour
 
         public bool showHandLightModel, showCrowbarModel;
     }
-    
+
     RigidbodyFirstPersonController RbFPCScript;
     PlayerHealth HealthScript;
     PlayerStamina StaminaScript;
@@ -63,17 +66,42 @@ public class HacksOnBabyxD : MonoBehaviour
 
     GameObject HandLightModel, CrowbarModel;
 
-    PlayerValues defaultValues;
+    PlayerValues defaultValues = new PlayerValues();
+    PlayerValues customValues = new PlayerValues();
+
+    private Rect HacksOnRect = new Rect(50, 50, (Screen.width - 100), (Screen.height - 100));
+    private bool ShowHacksDialog = false;
 
     void Start()
     {
-        defaultValues = new PlayerValues();
-        SaveDefaultValues(defaultValues);
+        SaveDefaultValues(defaultValues);   //save to use if needed
+        SaveDefaultValues(customValues);    //save to show default values at start
+    }
+
+    private void OnGUI()
+    {
+        if (ShowHacksDialog)
+        {
+            HacksOnRect = GUILayout.Window(0, HacksOnRect, HacksOnContent, "Hacks On Baby");
+        }
+    }
+
+    void HacksOnContent(int WindowID)
+    {
+        GUILayout.Label("Hacks On Baby - You Noob.");
+        GUILayout.Label("Todo");
     }
 
     void Update()
     {
-
+        //right ctrl + h
+        if( Input.GetKey(KeyCode.RightControl))
+        {
+            if( Input.GetKeyDown(KeyCode.H))
+            {
+                ShowHacksDialog = !ShowHacksDialog;
+            }
+        }
     }
 
     private void SaveDefaultValues(PlayerValues pv)
@@ -97,4 +125,6 @@ public class HacksOnBabyxD : MonoBehaviour
         pv.numBatteries = InventoryScript.numBatteries;
         //add default values for showing flashlight and crowbar models
     }
+
+    //function: revert values back to default values
 }
