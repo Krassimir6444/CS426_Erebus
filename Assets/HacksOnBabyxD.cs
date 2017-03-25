@@ -35,17 +35,45 @@
  * */
 using System;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
-public class HacksOnBabyxD : MonoBehaviour {
+public class HacksOnBabyxD : MonoBehaviour
+{
     public class PlayerValues
+    {
+        [NonSerialized]
+        public float forwardSpeed, backwardSpeed, strafeSpeed;
+        public float runMultiplier;
+
+        public int currentHealth;
+
+        public float currentStamina;
+
+        public bool hasFist, hasFlashlight, hasCrowbar, hasLaserPistol, hasKeycard;
+        public bool equippedFist, equippedFlashlight, equippedCrowbar, equippedLaserPistol;
+        public int numMedkits, numBatteries;
+
+        public bool showHandLightModel, showCrowbarModel;
+    }
+    
+    RigidbodyFirstPersonController RbFPCScript;
+    PlayerHealth HealthScript;
+    PlayerStamina StaminaScript;
+    PlayerInventory InventoryScript;
+
+    GameObject HandLightModel, CrowbarModel;
+
+    PlayerValues defaultValues;
+
+    void Start()
+    {
+        
+
+}
+
+    void Update()
     {
 
     }
-	void Start () {
-		
-	}
-	
-	void Update () {
-		
-	}
+
 }
