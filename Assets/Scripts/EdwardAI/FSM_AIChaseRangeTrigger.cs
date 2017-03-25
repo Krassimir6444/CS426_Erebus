@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSM_AIChaseRangeTrigger : MonoBehaviour {
+public class FSM_AIChaseRangeTrigger : MonoBehaviour
+{
     public FSM_AIController AIController;
     public GameObject Player; //used because an istrigger of player is bigger than the actual player model
 
     private FSM_AIController.AI_States previousAI_State;
 
-    void Start() {
+    void Start()
+    {
         //keep empty
     }
 
-    void Update() {
+    void Update()
+    {
         //keep empty
     }
-    
-    private void OnTriggerEnter(Collider other) {
-        if (other == Player) {
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other == Player)
+        {
             /*if (AIController.AI_State != FSM_AIController.AI_States.Chase) {
                 previousAI_State = AIController.AI_State;
             }*/
@@ -25,8 +30,10 @@ public class FSM_AIChaseRangeTrigger : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other == Player) {
+    private void OnTriggerExit(Collider other)
+    {
+        if (other == Player)
+        {
             //AIController.AI_State = previousAI_State;
             AIController.AI_State = FSM_AIController.AI_States.Patrol;
         }

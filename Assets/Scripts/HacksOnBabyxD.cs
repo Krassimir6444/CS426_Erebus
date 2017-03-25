@@ -63,7 +63,7 @@ public class HacksOnBabyxD : MonoBehaviour
     private PlayerValues defaultValues = new PlayerValues();
     private PlayerValues customValues = new PlayerValues();
 
-    private Rect HacksOnRect = new Rect(50, 50, (Screen.width - 100), (Screen.height - 100));
+    private Rect HacksOnRect = new Rect(100, 100, (Screen.width - 200), (Screen.height - 200));
     private bool ShowHacksDialog = false;
 
     void Start()
@@ -76,7 +76,7 @@ public class HacksOnBabyxD : MonoBehaviour
     {
         if (ShowHacksDialog)
         {
-            HacksOnRect = GUILayout.Window(0, HacksOnRect, HacksOnContent, "Hacks On Baby - You Noob.");
+            HacksOnRect = GUILayout.Window(0, HacksOnRect, HacksOnContent, "Hacks On Baby (You Noob.)");
         }
     }
 
