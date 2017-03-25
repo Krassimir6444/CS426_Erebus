@@ -14,3 +14,7 @@
 (L-CTRL) - Toggle Sneak Mode
 (LMB) [Within Inventory] - Equip Object
 (RMB) [Within Inventory] - Select 2 Objects to Combine 
+
+
+Only for demo purposes and for prof/ta when taking a look at the game:
+(R-Ctrl + H) - Toggle hack menu display
