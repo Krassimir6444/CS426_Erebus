@@ -53,12 +53,14 @@ public class HacksOnBabyxD : MonoBehaviour
     }
 
     //↓↓↓ Warning about UnityStandardAssets is because there are 2 "Standard Assets" folder. Fix that and this will be fixed
-    public RigidbodyFirstPersonController RbFPCScript;
-    public PlayerHealth HealthScript;
-    public PlayerStamina StaminaScript;
-    public PlayerInventory InventoryScript;
-
+    public GameObject Player;
     //public GameObject HandLightModel, CrowbarModel;
+
+
+    private RigidbodyFirstPersonController RbFPCScript;
+    private PlayerHealth HealthScript;
+    private PlayerStamina StaminaScript;
+    private PlayerInventory InventoryScript;
 
     private PlayerValues defaultValues = new PlayerValues();
     private PlayerValues customValues = new PlayerValues();
@@ -68,6 +70,10 @@ public class HacksOnBabyxD : MonoBehaviour
 
     void Start()
     {
+        RbFPCScript = Player.GetComponent<RigidbodyFirstPersonController>();
+        HealthScript = Player.GetComponent<PlayerHealth>();
+        StaminaScript = Player.GetComponent<PlayerStamina>();
+        InventoryScript = Player.GetComponent<PlayerInventory>();
         SaveDefaultValues(defaultValues);   //save to use if needed
         SaveDefaultValues(customValues);    //save to show default values at start
     }
@@ -82,7 +88,29 @@ public class HacksOnBabyxD : MonoBehaviour
 
     void HacksOnContent(int WindowID)
     {
-        GUILayout.Label("Todo");
+        GUILayout.Label("Todo still, will make it look better");
+
+        GUILayout.Label("Move Player to:");
+        if (GUILayout.Button("Level 1 Start"))
+        {
+            Player.transform.position = new Vector3(-35.95f, 0.5f, -12.5f);
+        }
+        if (GUILayout.Button("Level 2 Start (Not implemented yet)"))
+        {
+            Debug.Log("Not implemented yet");
+            //Player.transform.position = new Vector3(-35.95f, 0.5f, -12.5f);
+        }
+        if (GUILayout.Button("Engine room"))
+        {
+            Debug.Log("temporary location for engine room");
+            Player.transform.position = new Vector3(20.4f, 0.5f, 28.4f);
+        }
+        if (GUILayout.Button("Locker room"))
+        {
+            Debug.Log("temporary location for locker room");
+            Player.transform.position = new Vector3(19.7f, 0.5f, 37.6f);
+        }
+
     }
 
     void Update()
@@ -93,7 +121,24 @@ public class HacksOnBabyxD : MonoBehaviour
             if( Input.GetKeyDown(KeyCode.H))
             {
                 ShowHacksDialog = !ShowHacksDialog;
+                CursorIOSwitch(ShowHacksDialog);
             }
+        }
+    }
+
+    private void CursorIOSwitch(bool ShowHacksDialog)
+    {
+        if (ShowHacksDialog)
+        {
+            RbFPCScript.mouseLook.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            RbFPCScript.mouseLook.lockCursor = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
