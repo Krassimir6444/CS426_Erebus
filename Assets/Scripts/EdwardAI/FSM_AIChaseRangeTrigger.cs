@@ -5,7 +5,6 @@ using UnityEngine;
 public class FSM_AIChaseRangeTrigger : MonoBehaviour
 {
     public FSM_AIController AIController;
-    public GameObject Player; //used because an istrigger of player is bigger than the actual player model
 
     private FSM_AIController.AI_States previousAI_State;
 
@@ -21,7 +20,7 @@ public class FSM_AIChaseRangeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == Player)
+        if (other.tag == "Player")
         {
             /*if (AIController.AI_State != FSM_AIController.AI_States.Chase) {
                 previousAI_State = AIController.AI_State;
@@ -32,7 +31,7 @@ public class FSM_AIChaseRangeTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other == Player)
+        if (other.tag == "Player")
         {
             //AIController.AI_State = previousAI_State;
             AIController.AI_State = FSM_AIController.AI_States.Patrol;

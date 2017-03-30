@@ -30,6 +30,7 @@
  *          HUD (medium priority, show/display models if equipped/not equipped)
  * */
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -65,9 +66,12 @@ public class HacksOnBabyxD : MonoBehaviour
     private PlayerValues defaultValues = new PlayerValues();
     private PlayerValues customValues = new PlayerValues();
 
-    private Rect HacksOnRect = new Rect(100, 100, (Screen.width - 200), (Screen.height - 200));
+    private Rect HacksOnRect = new Rect(100, 50, (Screen.width - 200), (Screen.height - 100));
     private bool ShowHacksDialog = false;
 
+
+    private string movementSpeedString = new string('\0', 5);
+    private string runMultiplierString = new string('\0', 5);
     void Start()
     {
         RbFPCScript = Player.GetComponent<RigidbodyFirstPersonController>();
@@ -111,8 +115,28 @@ public class HacksOnBabyxD : MonoBehaviour
             Player.transform.position = new Vector3(19.7f, 0.5f, 37.6f);
         }
 
-    }
+        GUILayout.Label("Movement Speed");
+        movementSpeedString = GUILayout.TextField(movementSpeedString, 100);
+        movementSpeedString = Regex.Replace(movementSpeedString, @"[^0-9 ]", "");
+        int movementSpeed;
+        int.TryParse(movementSpeedString, out movementSpeed);
 
+        GUILayout.Label("Run Multiplier");
+        runMultiplierString = GUILayout.TextField(runMultiplierString, 100);
+        runMultiplierString = Regex.Replace(runMultiplierString, @"[^0-9 ]", "");
+        int runMultiplier;
+        int.TryParse(runMultiplierString, out runMultiplier);
+
+        if (GUILayout.Button("Change Settings"))
+        {
+            RbFPCScript.movementSettings.ForwardSpeed = movementSpeed;
+            RbFPCScript.movementSettings.BackwardSpeed = movementSpeed;
+            RbFPCScript.movementSettings.StrafeSpeed = movementSpeed;
+            RbFPCScript.movementSettings.RunMultiplier = runMultiplier;
+        }
+
+
+    }
     void Update()
     {
         //right ctrl + h

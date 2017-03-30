@@ -25,6 +25,13 @@ public class FSM_AIController : MonoBehaviour
     private int patrolNodeArrayDirection = 1;
     private Vector3 TargetedPatrolNodePosition;
 
+
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+    System.Random rand = new System.Random();
+    float startAttack = 0.0f;
+    float interval = 0.0f;
+
     void Start()
     {
         AI_State = AI_States.Patrol;
@@ -42,16 +49,19 @@ public class FSM_AIController : MonoBehaviour
 
         PatrolNodeArrayTransforms = PatrolNodes.GetComponentsInChildren<Transform>();
         TargetedPatrolNodePosition = PatrolStartNode.transform.position;
+
+        audioControllerScript = AudioController.GetComponent<AudioController>();
     }
 
     void Update()
     {
         //testing purposes only
+        /*
         if (Input.GetKey(KeyCode.U)) { AI_State = AI_States.Idle; }
         else if (Input.GetKey(KeyCode.I)) { AI_State = AI_States.Patrol; }
         else if (Input.GetKey(KeyCode.O)) { AI_State = AI_States.Attack; }
         else if (Input.GetKey(KeyCode.P)) { AI_State = AI_States.Chase; }
-
+        */
 
         switch (AI_State)
         {
@@ -106,8 +116,20 @@ public class FSM_AIController : MonoBehaviour
 
     private void AI_Attack()
     {
-        AI_Animation.Play("Attack2");
+        //AI_Animation.Play("Attack2");
         //call player take damage function
+        AI_Animation.CrossFadeQueued("Attack2", 0.3f, QueueMode.CompleteOthers, PlayMode.StopAll);
+
+        interval = Time.time - startAttack;
+        if (interval >= 0.5f)
+        {
+            audioControllerScript.audioEffect.clip = audioControllerScript.attackBune;
+            audioControllerScript.audioEffect.Play();
+
+            Player.GetComponent<PlayerHealth>().damageHealth(rand.Next(2, 11));
+            interval = 0;
+            startAttack = Time.time;
+        }
     }
 
     private void AI_Chase()
