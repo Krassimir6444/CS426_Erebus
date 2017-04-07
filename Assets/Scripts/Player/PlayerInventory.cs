@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
 
-    public UnityEngine.GameObject HUD;
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+
     public UnityEngine.UI.Text batteryCount;
     public UnityEngine.UI.Slider flashlightCharge;
     public UnityEngine.UI.Image equipedWeapon;
@@ -45,13 +47,14 @@ public class PlayerInventory : MonoBehaviour {
 
     void Awake ()
     {
+        audioControllerScript = AudioController.GetComponent<AudioController>();
         playerHealth = GetComponent<PlayerHealth>();
         playerInteract = GetComponent<PlayerInteract>();
     }
 
 	void Start ()
     {
-        HUD.SetActive(true);
+
 	}
 
     void Update()
@@ -61,6 +64,9 @@ public class PlayerInventory : MonoBehaviour {
         {
             // start hold down 'F' timer
             startTime = Time.time;
+
+            audioControllerScript.audioEffect.clip = audioControllerScript.flashlightToggle;
+            audioControllerScript.audioEffect.Play();
 
             if (equippedFlashlight && !depletedBattery)
             {
@@ -109,6 +115,9 @@ public class PlayerInventory : MonoBehaviour {
         // recharge flashlight
         if (Input.GetKeyDown(KeyCode.B) && (numBatteries > 0))
         {
+            audioControllerScript.audioEffect.clip = audioControllerScript.flashlightRecharge;
+            audioControllerScript.audioEffect.Play();
+
             flashlightCharge.value = 100;
             depletedBattery = false;
             numBatteries--;
@@ -131,6 +140,9 @@ public class PlayerInventory : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q) && (numMedkits > 0))
         {
+            audioControllerScript.audioEffect.clip = audioControllerScript.damagedPlayer;
+            audioControllerScript.audioEffect.Play();
+
             playerHealth.restoreHealth(33);
             numMedkits--;
         }

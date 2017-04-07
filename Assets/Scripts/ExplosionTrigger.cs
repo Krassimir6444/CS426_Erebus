@@ -34,7 +34,7 @@ public class ExplosionTrigger : MonoBehaviour {
             //trigger the explosion
             for(int i = 0; i < ExplosionObjects.Count; i++)
             {
-                Debug.Log(ExplosionObjects[i]);
+                //Debug.Log(ExplosionObjects[i]);
                 ExplosionObjects[i].SetActive(true);
                 //playAudio = true;
             }

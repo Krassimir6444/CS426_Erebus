@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour {
 
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+
     PlayerInventory playerInventory;
     EnemyHealth enemyHealth;
     public GameObject player;
@@ -13,6 +16,7 @@ public class PlayerAttack : MonoBehaviour {
     public GameObject nearbyEnemy;
 
     void Start () {
+        audioControllerScript = AudioController.GetComponent<AudioController>();
         playerInventory = GetComponent<PlayerInventory>();
     }
 	
@@ -24,6 +28,7 @@ public class PlayerAttack : MonoBehaviour {
             crowbar.transform.position += Vector3.up * 0.1F;
             crowbar.transform.Rotate(new Vector3(0,0,40));
         }
+
         if (Input.GetKeyUp(KeyCode.Mouse0) && (playerInventory.equippedCrowbar == true))
         {
             crowbar.transform.Rotate(new Vector3(0, 0, -40));
@@ -31,6 +36,9 @@ public class PlayerAttack : MonoBehaviour {
 
             if (enemyInRange == true)
             {
+                audioControllerScript.audioEffect.clip = audioControllerScript.attackCrowbar;
+                audioControllerScript.audioEffect.Play();
+
                 enemyHealth = nearbyEnemy.GetComponentInParent<EnemyHealth>();
                 enemyHealth.ReceiveDamage(20);
                 enemyHealth = null;

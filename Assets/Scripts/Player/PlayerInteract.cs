@@ -6,17 +6,20 @@ using UnityEngine.UI;
 
 public class PlayerInteract : MonoBehaviour {
 
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+
     public UnityEngine.UI.Text interactPrompt;
     public UnityEngine.UI.Text keycardPrompt;
     public UnityEngine.UI.Text crowbarPrompt;
     PlayerInventory playerInventory;
-
+    
     public bool objectInRange = false;
     public GameObject nearbyObject;
 
-
     void Start()
     {
+        audioControllerScript = AudioController.GetComponent<AudioController>();
         playerInventory = GetComponent<PlayerInventory>();
     }
 
@@ -24,11 +27,13 @@ public class PlayerInteract : MonoBehaviour {
     {
         if (objectInRange == true && nearbyObject != null)
         {
-            if (nearbyObject.CompareTag("Equipment_Flashlight"))
+            if (nearbyObject != null && nearbyObject.CompareTag("Equipment_Flashlight"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //audio clip
+                    audioControllerScript.audioEffect.clip = audioControllerScript.pickupObject;
+                    audioControllerScript.audioEffect.Play();
+
                     playerInventory.hasFlashlight = true;
                     playerInventory.equippedFlashlight = true;
                     playerInventory.flashlight.SetActive(true);
@@ -39,11 +44,13 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
 
-            if (nearbyObject.CompareTag("Consumable_Battery"))
+            if (nearbyObject != null && nearbyObject.CompareTag("Consumable_Battery"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //audio clip
+                    audioControllerScript.audioEffect.clip = audioControllerScript.pickupObject;
+                    audioControllerScript.audioEffect.Play();
+
                     playerInventory.numBatteries++;
                     playerInventory.batteryCount.text = playerInventory.numBatteries + "";
                     Destroy(nearbyObject);
@@ -53,11 +60,13 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
 
-            if (nearbyObject.CompareTag("Equipment_Crowbar"))
+            if (nearbyObject != null && nearbyObject.CompareTag("Equipment_Crowbar"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //audio clip
+                    audioControllerScript.audioEffect.clip = audioControllerScript.pickupObject;
+                    audioControllerScript.audioEffect.Play();
+
                     playerInventory.hasCrowbar = true;
                     playerInventory.unequipPreviousWeapon();
                     playerInventory.equippedCrowbar = true;
@@ -70,11 +79,13 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
 
-            if (nearbyObject.CompareTag("Consumable_Keycard"))
+            if (nearbyObject != null && nearbyObject.CompareTag("Consumable_Keycard"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //audio clip
+                    audioControllerScript.audioEffect.clip = audioControllerScript.pickupObject;
+                    audioControllerScript.audioEffect.Play();
+
                     playerInventory.hasKeycard = true;
                     Destroy(nearbyObject);
                     nearbyObject = null;
@@ -83,11 +94,13 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
 
-            if (nearbyObject.CompareTag("Consumable_Medkit"))
+            if (nearbyObject != null && nearbyObject.CompareTag("Consumable_Medkit"))
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //audio clip
+                    audioControllerScript.audioEffect.clip = audioControllerScript.pickupObject;
+                    audioControllerScript.audioEffect.Play();
+
                     playerInventory.numMedkits++;
                     Destroy(nearbyObject);
                     nearbyObject = null;
@@ -96,16 +109,24 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && playerInventory.hasKeycard &&
+            if (nearbyObject != null && Input.GetKeyDown(KeyCode.E) && playerInventory.hasKeycard &&
                 nearbyObject.CompareTag("Door_Locked"))
             {
+                audioControllerScript.audioEffect.clip = audioControllerScript.flashlightRecharge;
+                audioControllerScript.audioEffect.Play();
+
                 nearbyObject.transform.position += Vector3.up * 5.0F;
+
+                playerInventory.hasKeycard = false;
             }
 
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && playerInventory.hasCrowbar &&
+            if (nearbyObject != null && Input.GetKeyDown(KeyCode.Mouse0) && playerInventory.hasCrowbar &&
                 nearbyObject.CompareTag("Door_Jammed"))
             {
+                audioControllerScript.audioEffect.clip = audioControllerScript.attackCrowbar;
+                audioControllerScript.audioEffect.Play();
+
                 playerInventory.unequipPreviousWeapon();
                 playerInventory.hasCrowbar = false;
                 nearbyObject.transform.position += Vector3.up * 5.0F;
@@ -136,7 +157,8 @@ public class PlayerInteract : MonoBehaviour {
         {
             crowbarPrompt.gameObject.SetActive(true);
         }
-        else if (!(other.gameObject.CompareTag("Door") || 
+        else if (!(other.gameObject.CompareTag("Untagged") ||
+                   other.gameObject.CompareTag("Door") || 
                    other.gameObject.CompareTag("SF_Door") ||
                    other.gameObject.CompareTag("Enemy") ||
                    other.gameObject.CompareTag("Enemy_AttackRange") ||

@@ -95,22 +95,17 @@ public class HacksOnBabyxD : MonoBehaviour
         GUILayout.Label("Todo still, will make it look better");
 
         GUILayout.Label("Move Player to:");
-        if (GUILayout.Button("Level 1 Start"))
-        {
-            Player.transform.position = new Vector3(-35.95f, 0.5f, -12.5f);
-        }
-        if (GUILayout.Button("Level 2 Start (Not implemented yet)"))
-        {
+        if (GUILayout.Button("Level 1 Start"))  { Player.transform.position = new Vector3(-35.95f, 0.5f, -12.5f); }
+        if (GUILayout.Button("Level 1 Exit"))   { Player.transform.position = new Vector3(6f, 0.5f, 30f);}
+        if (GUILayout.Button("Level 2 Start (Not implemented yet)")) {
             Debug.Log("Not implemented yet");
             //Player.transform.position = new Vector3(-35.95f, 0.5f, -12.5f);
         }
-        if (GUILayout.Button("Engine room"))
-        {
+        if (GUILayout.Button("Engine room"))    {
             Debug.Log("temporary location for engine room");
             Player.transform.position = new Vector3(20.4f, 0.5f, 28.4f);
         }
-        if (GUILayout.Button("Locker room"))
-        {
+        if (GUILayout.Button("Locker room"))    {
             Debug.Log("temporary location for locker room");
             Player.transform.position = new Vector3(19.7f, 0.5f, 37.6f);
         }

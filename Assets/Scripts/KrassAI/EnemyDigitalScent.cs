@@ -17,7 +17,7 @@ public class EnemyDigitalScent : MonoBehaviour {
     public float pickedUpScent = 0.0f;
     public float freshness = 0.0f;
 
-    float StepSpeed = 1.7f;
+    float StepSpeed = 1.5f;
     float TurnSpeed = 15f;
 
     void Start () {
@@ -28,7 +28,7 @@ public class EnemyDigitalScent : MonoBehaviour {
 	void Update () {
 
         freshness = Time.time - pickedUpScent;
-        if (freshness > 2.5f) { EnemyState = EnemyStates.Idle; }
+        if (freshness > 2.0f) { EnemyState = EnemyStates.Idle; }
 
         //Idle
         if (EnemyState == EnemyStates.Idle)
@@ -65,9 +65,12 @@ public class EnemyDigitalScent : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Player_Node"))
         {
-            playerNode = other.gameObject;
-            pickedUpScent = Time.time;
-            if (EnemyState != EnemyStates.Attack) { EnemyState = EnemyStates.Chase; }
+            if (playerNode == null || other.gameObject.GetComponent<PlayerNode>().NodeID >= playerNode.GetComponent<PlayerNode>().NodeID)
+            {
+                playerNode = other.gameObject;
+                pickedUpScent = Time.time;
+                if (EnemyState != EnemyStates.Attack) { EnemyState = EnemyStates.Chase; }
+            }
         }
     }
     void OnTriggerExit(Collider other) { }

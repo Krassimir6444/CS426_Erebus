@@ -4,7 +4,10 @@ using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
-	public GameObject Enemy;
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+
+    public GameObject Enemy;
 	private int startingHealth = 100;                            // The amount of health the player starts the game with.
 	public int currentHealth;                                   // The current health the player has.
 
@@ -14,8 +17,10 @@ public class EnemyHealth : MonoBehaviour
 
 	void Start ()
 	{
-		// Set the initial health of the player.
-		currentHealth = startingHealth;
+        audioControllerScript = AudioController.GetComponent<AudioController>();
+
+        // Set the initial health of the player.
+        currentHealth = startingHealth;
 
 		isDead = false;
 	}
@@ -29,8 +34,11 @@ public class EnemyHealth : MonoBehaviour
 
 	public void ReceiveDamage (int value)
 	{
-		// Set the damaged flag so the screen will flash.
-		damaged = true;
+        audioControllerScript.audioEffect.clip = audioControllerScript.damagedBune;
+        audioControllerScript.audioEffect.PlayDelayed(1);
+
+        // Set the damaged flag so the screen will flash.
+        damaged = true;
 
 		// Reduce the current health by the damage amount.
 		currentHealth -= value;
@@ -46,8 +54,11 @@ public class EnemyHealth : MonoBehaviour
 
 	void Death ()
 	{
-		// Set the death flag so this function won't be called again.
-		isDead = true;
+        audioControllerScript.audioEffect.clip = audioControllerScript.deathBune;
+        audioControllerScript.audioEffect.Play();
+
+        // Set the death flag so this function won't be called again.
+        isDead = true;
 		Destroy (Enemy);
 	}       
 }

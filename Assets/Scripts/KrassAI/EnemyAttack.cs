@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour {
 
+    public GameObject AudioController;
+    AudioController audioControllerScript;
+
     PlayerHealth playerHealth;
     EnemyDigitalScent enemyDigitalScent;
 
@@ -18,6 +21,7 @@ public class EnemyAttack : MonoBehaviour {
     float interval = 0.0f;
 
     void Start () {
+        audioControllerScript = AudioController.GetComponent<AudioController>();
         enemyDigitalScent = EnemyParentObject.GetComponentInParent<EnemyDigitalScent>();
         EnemyAnimation = EnemyParentObject.GetComponentInChildren<Animation>();
     }
@@ -33,6 +37,9 @@ public class EnemyAttack : MonoBehaviour {
             interval = Time.time - startAttack;
             if (interval >= 0.5f)
             {
+                audioControllerScript.audioEffect.clip = audioControllerScript.attackBune;
+                audioControllerScript.audioEffect.Play();
+
                 playerHealth.damageHealth(rand.Next(EnemyAttackLowerBound, EnemyAttackUpperBound));
                 interval = 0;
                 startAttack = Time.time;

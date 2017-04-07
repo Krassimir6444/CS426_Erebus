@@ -8,6 +8,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerHealth : MonoBehaviour {
 
+    public GameObject AudioController;
+    AudioController audioControllerScript;
 
     public int initialHealth = 100;
     public int currentHealth;
@@ -24,9 +26,9 @@ public class PlayerHealth : MonoBehaviour {
     RigidbodyFirstPersonController rigidbodyFirestPersonController;
     PlayerStamina playerStamina;
 
-
     void Awake()
     {
+        audioControllerScript = AudioController.GetComponent<AudioController>();
         rigidbodyFirestPersonController = GetComponent<RigidbodyFirstPersonController>();
         playerStamina = GetComponent<PlayerStamina>();
     }
@@ -41,9 +43,8 @@ public class PlayerHealth : MonoBehaviour {
     {
         updateHealth();
 
-        if (damaged) { damageImage.color = flashColor; }
-//        else { damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime); }
-        damaged = false;
+        //if (damaged) { damageImage.color = flashColor; }
+        //damaged = false;
 
         //if (currentHealth == 100) healthSlider.gameObject.SetActive(false);
         //else healthSlider.gameObject.SetActive(true);   
@@ -64,15 +65,21 @@ public class PlayerHealth : MonoBehaviour {
 
     public void damageHealth(int value)
     {
+        audioControllerScript.audioEffect.clip = audioControllerScript.damagedPlayer;
+        audioControllerScript.audioEffect.Play();
+
         currentHealth -= value;
         updateHealth();
 
-        if(currentHealth <= 0 && !isDead) { Death(); }
+        if (currentHealth <= 0 && !isDead) { Death(); }
     }
 
 
     void Death()
     {
+        audioControllerScript.audioEffect.clip = audioControllerScript.deathPlayer;
+        audioControllerScript.audioEffect.Play();
+
         isDead = true;
         rigidbodyFirestPersonController.enabled = false;
         //anim.SetTrigger("Die");
