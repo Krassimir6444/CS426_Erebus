@@ -8,8 +8,10 @@ public class PlayerInventory : MonoBehaviour {
     public GameObject AudioController;
     AudioController audioControllerScript;
 
-    public UnityEngine.UI.Text batteryCount;
     public UnityEngine.UI.Slider flashlightCharge;
+    public UnityEngine.UI.Text batteryCount;
+    public UnityEngine.UI.Image batteryBackground;
+
     public UnityEngine.UI.Image equipedWeapon;
     //public UnityEngine.GameObject exitDoor;
     PlayerHealth playerHealth;
@@ -52,10 +54,7 @@ public class PlayerInventory : MonoBehaviour {
         playerInteract = GetComponent<PlayerInteract>();
     }
 
-	void Start ()
-    {
-
-	}
+	void Start () { }
 
     void Update()
     {
@@ -109,6 +108,12 @@ public class PlayerInventory : MonoBehaviour {
                 depletedBattery = true;
                 activateFlashlight = false;
                 pointLight.gameObject.SetActive(false);
+
+                audioControllerScript.audioEffect.clip = audioControllerScript.flashlightDies;
+                audioControllerScript.audioEffect.Play();
+
+                if (numBatteries > 0) { batteryBackground.color = new Color(1.0f, 0.65f, 0, 0.4f); }
+                else { batteryBackground.color = new Color(1.0f, 0, 0, 0.4f); }
             }     
         }
 
@@ -120,6 +125,7 @@ public class PlayerInventory : MonoBehaviour {
 
             flashlightCharge.value = 100;
             depletedBattery = false;
+            batteryBackground.color = new Color(1.0f, 1.0f, 1.0f, 0.4f);
             numBatteries--;
             batteryCount.text = numBatteries + "";
         }

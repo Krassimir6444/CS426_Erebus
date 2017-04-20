@@ -20,6 +20,8 @@ public class AudioController : MonoBehaviour {
     public AudioClip damagedPlayer;
     public AudioClip deathBune;
     public AudioClip deathPlayer;
+    public AudioClip doorToggle;
+    public AudioClip flashlightDies;
     public AudioClip flashlightToggle;
     public AudioClip flashlightRecharge;
     public AudioClip pickupObject;

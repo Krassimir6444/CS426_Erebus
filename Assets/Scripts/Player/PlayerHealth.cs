@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -8,8 +9,12 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerHealth : MonoBehaviour {
 
+    public GameObject GameController;
+    GameController gameControllerScript;
     public GameObject AudioController;
     AudioController audioControllerScript;
+
+    public GameObject Message;
 
     public int initialHealth = 100;
     public int currentHealth;
@@ -28,6 +33,7 @@ public class PlayerHealth : MonoBehaviour {
 
     void Awake()
     {
+        gameControllerScript = GameController.GetComponent<GameController>();
         audioControllerScript = AudioController.GetComponent<AudioController>();
         rigidbodyFirestPersonController = GetComponent<RigidbodyFirstPersonController>();
         playerStamina = GetComponent<PlayerStamina>();
@@ -65,13 +71,16 @@ public class PlayerHealth : MonoBehaviour {
 
     public void damageHealth(int value)
     {
-        audioControllerScript.audioEffect.clip = audioControllerScript.damagedPlayer;
-        audioControllerScript.audioEffect.Play();
+        if (isDead != true)
+        {
+            audioControllerScript.audioEffect.clip = audioControllerScript.damagedPlayer;
+            audioControllerScript.audioEffect.Play();
 
-        currentHealth -= value;
-        updateHealth();
+            currentHealth -= value;
+            updateHealth();
 
-        if (currentHealth <= 0 && !isDead) { Death(); }
+            if (currentHealth <= 0 && !isDead) { Death(); }
+        }
     }
 
 
@@ -82,8 +91,15 @@ public class PlayerHealth : MonoBehaviour {
 
         isDead = true;
         rigidbodyFirestPersonController.enabled = false;
-        //anim.SetTrigger("Die");
+
+        Message.GetComponent<Text>().color = Color.red;
+        Message.GetComponent<Text>().text = "You Have Died";
+        Message.SetActive(true);
+
+        Invoke("ReloadGame", 5.0f);
     }
+
+    void ReloadGame() { SceneManager.LoadScene(gameControllerScript.currentLevel); }
 
 
     public void damageHealth(string state)

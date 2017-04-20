@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour {
     public RectTransform Premise;
     public GameObject HUD;
 
+    public int currentLevel = 1;
+
     private RigidbodyFirstPersonController RbFPCScript;
     private GameObject backgroundMusic;
     private AudioSource theme;
