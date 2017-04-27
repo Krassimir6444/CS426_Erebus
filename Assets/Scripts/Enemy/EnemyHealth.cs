@@ -11,9 +11,9 @@ public class EnemyHealth : MonoBehaviour
 	private int startingHealth = 100;                            // The amount of health the player starts the game with.
 	public int currentHealth;                                   // The current health the player has.
 
-	bool isDead;                                                // Whether the player is dead.
-	bool damaged;                                               // True when the player gets damaged.
-
+    public bool invulnerable = false;
+    bool isDead = false;                                                // Whether the player is dead.
+	bool damaged = false;                                               // True when the player gets damaged.
 
 	void Start ()
 	{
@@ -21,14 +21,12 @@ public class EnemyHealth : MonoBehaviour
 
         // Set the initial health of the player.
         currentHealth = startingHealth;
-
-		isDead = false;
 	}
 
 
 	void Update ()
 	{
-
+        if(isDead && !invulnerable) { Death(); }
 	}
 
 
@@ -44,7 +42,7 @@ public class EnemyHealth : MonoBehaviour
 		currentHealth -= value;
 
 		// If the player has lost all it's health and the death flag hasn't been set yet...
-		if(currentHealth <= 0 && !isDead)
+		if(currentHealth <= 0 && !isDead && !invulnerable)
 		{
 			// ... it should die.
 			Death ();

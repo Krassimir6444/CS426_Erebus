@@ -20,25 +20,31 @@ public class LockedDoorController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (playerInventory.hasKeycard)
+        if (other.CompareTag("Player"))
         {
-            Door.GetComponent<Animation>().Play("open");
-        }
-        else
-        {
-            KeycardPrompt.gameObject.SetActive(true);
+            if (playerInventory.hasKeycard)
+            {
+                Door.GetComponent<Animation>().Play("open");
+            }
+            else
+            {
+                KeycardPrompt.gameObject.SetActive(true);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (playerInventory.hasKeycard)
+        if (other.CompareTag("Player"))
         {
-            Door.GetComponent<Animation>().Play("close");
-        }
-        else
-        {
-            KeycardPrompt.gameObject.SetActive(false);
+            if (playerInventory.hasKeycard)
+            {
+                Door.GetComponent<Animation>().Play("close");
+            }
+            else
+            {
+                KeycardPrompt.gameObject.SetActive(false);
+            }
         }
     }
 }

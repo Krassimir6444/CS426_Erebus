@@ -60,9 +60,9 @@ public class EnemyAttack : MonoBehaviour {
             enemyDigitalScent.EnemyState = EnemyDigitalScent.EnemyStates.Attack;
         }
     }
+
     void OnTriggerExit(Collider other)
     {
-
         if (other.gameObject.CompareTag("Player"))
         {
             playerHandle = null;

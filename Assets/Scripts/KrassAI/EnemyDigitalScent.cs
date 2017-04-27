@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyDigitalScent : MonoBehaviour {
 
+    EnemyAttack enemyAttack;
+    EnemyHealth enemyHealth;
+
     public GameObject EnemyParentObject;
     public GameObject playerNode;
 
@@ -17,10 +20,13 @@ public class EnemyDigitalScent : MonoBehaviour {
     public float pickedUpScent = 0.0f;
     public float freshness = 0.0f;
 
-    float StepSpeed = 1.5f;
-    float TurnSpeed = 15f;
+    public float stepSpeed = 1.5f;
+    public float turnSpeed = 15f;
 
     void Start () {
+        enemyHealth = EnemyParentObject.GetComponent<EnemyHealth>();
+        enemyAttack = EnemyParentObject.GetComponentInChildren<EnemyAttack>();
+
         EnemyTransform = EnemyParentObject.GetComponent<Transform>();
         EnemyAnimation = EnemyParentObject.GetComponentInChildren<Animation>();
     }
@@ -40,17 +46,17 @@ public class EnemyDigitalScent : MonoBehaviour {
         else if (EnemyState == EnemyStates.Chase)
         {
             EnemyAnimation.Play("creature1walkforward");
-            //EnemyAnimation.CrossFade("creature1walkforward", 0.3f, PlayMode.StopAll);
-            //EnemyAnimation.CrossFadeQueued("creature1walkforward", 0.3f, QueueMode.CompleteOthers, PlayMode.StopAll);
+            EnemyAnimation.CrossFade("creature1walkforward", 0.3f, PlayMode.StopAll);
+            EnemyAnimation.CrossFadeQueued("creature1walkforward", 0.3f, QueueMode.CompleteOthers, PlayMode.StopAll);
 
             //Turn monster towards next player node
             Vector3 targetDir = playerNode.transform.position - EnemyTransform.position;
-            float turnStep = TurnSpeed * Time.deltaTime;
+            float turnStep = turnSpeed * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(EnemyTransform.forward, targetDir, turnStep, 0.0f);
             EnemyTransform.rotation = Quaternion.LookRotation(newDir);
 
             //Move towards next player node
-            float step = StepSpeed * Time.deltaTime;
+            float step = stepSpeed * Time.deltaTime;
             EnemyTransform.position = Vector3.MoveTowards(EnemyTransform.position, playerNode.transform.position, step);
 
             //Move view range along with AI
@@ -63,6 +69,12 @@ public class EnemyDigitalScent : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Light_Exposure"))
+        {
+            enemyAttack.EnemyAttackUpperBound = 66;
+            enemyAttack.EnemyAttackLowerBound = 10;
+        }
+
         if (other.gameObject.CompareTag("Player_Node"))
         {
             if (playerNode == null || other.gameObject.GetComponent<PlayerNode>().NodeID >= playerNode.GetComponent<PlayerNode>().NodeID)
@@ -73,5 +85,13 @@ public class EnemyDigitalScent : MonoBehaviour {
             }
         }
     }
-    void OnTriggerExit(Collider other) { }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Light_Exposure"))
+        {
+            enemyAttack.EnemyAttackUpperBound = 33;
+            enemyAttack.EnemyAttackLowerBound = 5;
+        }
+    }
 }

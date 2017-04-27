@@ -16,12 +16,14 @@ public class PlayerInventory : MonoBehaviour {
     //public UnityEngine.GameObject exitDoor;
     PlayerHealth playerHealth;
     PlayerInteract playerInteract;
+    EnemyEnhance enemyEnhance;
 
     //equipment
     public Sprite fistSprite;
     public bool hasFist = true;
     public bool equippedFist = true;
 
+    public UnityEngine.GameObject lightRange;
     public UnityEngine.GameObject flashlight;
     public UnityEngine.Light pointLight;
     public bool hasFlashlight = false;
@@ -52,6 +54,7 @@ public class PlayerInventory : MonoBehaviour {
         audioControllerScript = AudioController.GetComponent<AudioController>();
         playerHealth = GetComponent<PlayerHealth>();
         playerInteract = GetComponent<PlayerInteract>();
+        enemyEnhance = GetComponent<EnemyEnhance>();
     }
 
 	void Start () { }
@@ -72,10 +75,12 @@ public class PlayerInventory : MonoBehaviour {
                 if (activateFlashlight == false) {
                     activateFlashlight = true;
                     pointLight.gameObject.SetActive(true);
+                    lightRange.gameObject.SetActive(true);
                 }
                 else {
                     activateFlashlight = false;
                     pointLight.gameObject.SetActive(false);
+                    lightRange.gameObject.SetActive(false);
                 }
             }
         }

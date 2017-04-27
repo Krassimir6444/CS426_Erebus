@@ -29,15 +29,21 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Door.GetComponent<Animation>().Play("open");
-        audioControllerScript.audioEffect.clip = audioControllerScript.doorToggle;
-        audioControllerScript.audioEffect.Play();
+        if (other.CompareTag("Player"))
+        {
+            Door.GetComponent<Animation>().Play("open");
+            audioControllerScript.audioEffect.clip = audioControllerScript.doorToggle;
+            audioControllerScript.audioEffect.Play();
+        }
 
     }
     private void OnTriggerExit(Collider other)
     {
-        Door.GetComponent<Animation>().Play("close");
-        audioControllerScript.audioEffect.clip = audioControllerScript.doorToggle;
-        audioControllerScript.audioEffect.Play();
+        if (other.CompareTag("Player"))
+        {
+            Door.GetComponent<Animation>().Play("close");
+            audioControllerScript.audioEffect.clip = audioControllerScript.doorToggle;
+            audioControllerScript.audioEffect.Play();
+        }
     }
 }
